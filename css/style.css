@@ -129,3 +129,825 @@ body::before {
     .channel-text h1 { font-size: 1.8rem; }
     .work-grid { grid-template-columns: 1fr; }
 }
+
+
+/* --- NEW SECTIONS: SERVICES & TESTIMONIALS --- */
+
+/* Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    background: var(--bg-matte);
+    border: 1px solid var(--glass-border);
+    padding: 30px;
+    border-radius: 12px;
+    transition: 0.3s var(--ease-smooth);
+}
+
+.service-card:hover {
+    background: var(--glass-bg);
+    border-color: rgba(255,255,255,0.2);
+    transform: translateY(-5px);
+}
+
+.service-icon { font-size: 2rem; margin-bottom: 15px; opacity: 0.8; }
+.service-card h3 { font-size: 1.1rem; margin-bottom: 10px; font-weight: 700; }
+.service-card p { font-size: 0.9rem; color: var(--text-gray); line-height: 1.5; }
+
+/* Testimonials */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    position: relative;
+    padding-left: 30px;
+    border-left: 2px solid var(--glass-border);
+}
+
+.quote {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: #ddd;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.client-meta { display: flex; flex-direction: column; }
+.client-name { font-weight: 700; font-size: 0.9rem; color: white; }
+.client-role { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 1px; }
+
+/* Timeline Showcase */
+.timeline-showcase {
+    width: 100%;
+    height: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--glass-border);
+}
+
+.timeline-showcase img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    transition: 0.5s;
+    filter: grayscale(100%);
+}
+
+.timeline-showcase:hover img { opacity: 1; filter: grayscale(0%); transform: scale(1.02); }
+
+.timeline-overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.timeline-overlay span {
+    background: rgba(0,0,0,0.7);
+    padding: 10px 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    backdrop-filter: blur(10px);
+}
+
+
+/* --- FLUID PAGE TRANSITIONS --- */
+
+/* 1. Global Smoothness */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 2. The Page Setup (Hidden by default) */
+body {
+    opacity: 0; /* Starts invisible */
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1); /* Smooth fade duration */
+}
+
+/* 3. The "Loaded" State (Visible) */
+body.loaded {
+    opacity: 1;
+}
+
+/* 4. Tab Hover "Radioactive Glow" */
+.channel-tabs a {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.channel-tabs a:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    /* The Glow Effect */
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), 
+                inset 0 0 10px rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+    border-color: rgba(255,255,255,0.4);
+}
+
+/* Active Tab Glow */
+.channel-tabs a.active {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); /* Stronger glow for active */
+}
+
+/* 5. Fluid Grid Items (Staggered Entry) */
+.work-grid .project-item, 
+.reels-grid .reel-item {
+    opacity: 0;
+    animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Stagger delays automatically for first few items */
+.work-grid .project-item:nth-child(1) { animation-delay: 0.1s; }
+.work-grid .project-item:nth-child(2) { animation-delay: 0.2s; }
+.work-grid .project-item:nth-child(3) { animation-delay: 0.3s; }
+.work-grid .project-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* The Fade Up Motion */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* --- INFO TAB: FLUID DYNAMICS & GLOW --- */
+
+/* 1. Services Grid */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    background: var(--bg-matte);
+    border: 1px solid var(--glass-border);
+    padding: 35px 30px;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    
+    /* FLUID ANIMATION PHYSICS */
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateZ(0); /* Hardware acceleration */
+}
+
+/* The "Highlight" Gradient Blob (Hidden by default) */
+.service-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* HOVER STATE: Float + Glow + Border Light */
+.service-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: #161616; /* Slightly lighter matte */
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4), 
+                0 0 20px rgba(255,255,255,0.05); /* Outer Glow */
+}
+
+.service-card:hover::before { opacity: 1; }
+
+.service-icon { 
+    font-size: 2.5rem; 
+    margin-bottom: 20px; 
+    opacity: 0.7; 
+    transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* Bouncy Icon */
+}
+
+.service-card:hover .service-icon { 
+    opacity: 1; 
+    transform: scale(1.2) rotate(-5deg); /* Icon jumps */
+    text-shadow: 0 0 15px rgba(255,255,255,0.4);
+}
+
+.service-card h3 { font-size: 1.2rem; margin-bottom: 10px; font-weight: 700; color: #fff; }
+.service-card p { font-size: 0.95rem; color: var(--text-gray); line-height: 1.6; }
+
+
+/* 2. Testimonials (Client Words) */
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    position: relative;
+    padding: 30px;
+    background: rgba(255,255,255,0.02);
+    border-left: 3px solid var(--glass-border);
+    border-radius: 0 12px 12px 0;
+    transition: all 0.4s ease;
+}
+
+.testimonial-card:hover {
+    background: rgba(255,255,255,0.05);
+    border-left-color: #fff; /* White line lights up */
+    transform: translateX(10px); /* Slides right smoothly */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.quote {
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #ccc;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.client-meta { display: flex; flex-direction: column; }
+.client-name { font-weight: 700; font-size: 1rem; color: #fff; }
+.client-role { font-size: 0.8rem; color: #666; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+
+/* 3. Timeline Showcase (Process) */
+.timeline-showcase {
+    width: 100%;
+    height: 350px;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--glass-border);
+    background: #000;
+}
+
+.timeline-showcase img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+    filter: grayscale(100%) blur(2px);
+    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1); /* Super smooth slow ease */
+    transform: scale(1.05);
+}
+
+/* Hover: Clear Image + Zoom In */
+.timeline-showcase:hover img { 
+    opacity: 1; 
+    filter: grayscale(0%) blur(0px); 
+    transform: scale(1);
+}
+
+.timeline-overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 2;
+    transition: 0.5s;
+}
+
+.timeline-showcase:hover .timeline-overlay {
+    opacity: 0; /* Text disappears to show image */
+    transform: translate(-50%, -40%);
+}
+
+.timeline-overlay span {
+    background: rgba(0,0,0,0.8);
+    padding: 12px 25px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 700;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+
+/* --- PREMIUM CONTACT SECTION --- */
+
+.contact-premium-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+/* 1. PREMIUM EMAIL CARD */
+.email-premium-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px 20px;
+    
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    cursor: pointer;
+    
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.email-premium-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.email-icon {
+    display: flex;
+    align-items: center;
+    color: var(--text-gray);
+}
+
+.email-text {
+    flex-grow: 1;
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    color: var(--text-white);
+    font-weight: 500;
+}
+
+/* The "Copy" Pill Button */
+.copy-pill {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 6px 14px;
+    border-radius: 50px; /* Fully Rounded Pill */
+    
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-gray);
+    transition: 0.3s;
+}
+
+/* Interaction State (Handled by JS) */
+.email-premium-card:active .copy-pill {
+    transform: scale(0.95);
+}
+
+/* When Hovering the Card, Light up the Copy Pill */
+.email-premium-card:hover .copy-pill {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+
+/* 2. SOCIAL PILLS ROW */
+.social-row {
+    display: flex;
+    gap: 15px;
+}
+
+.social-pill {
+    flex: 1; /* Both take equal width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    
+    padding: 12px 20px;
+    border-radius: 50px; /* Pill Shape */
+    
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-gray);
+    
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.social-pill svg {
+    transition: 0.3s;
+    opacity: 0.7;
+}
+
+/* Hover Effects */
+.social-pill:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.social-pill:hover svg {
+    opacity: 1;
+    stroke: #000; /* Make icon black on hover */
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .email-premium-card {
+        padding: 15px;
+    }
+    .email-text {
+        font-size: 0.85rem;
+    }
+}
+
+
+/* --- CREATIVE WORK SECTION --- */
+
+/* 1. The Spotlight Grid (Bento Layout) */
+.spotlight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 Column Base */
+    gap: 30px;
+    margin-bottom: 100px;
+}
+
+/* Feature the first item (Full Width) */
+.spotlight-grid .project-item.featured {
+    grid-column: span 2;
+    height: 500px; /* Taller for cinematic feel */
+}
+
+/* 2. THE SPOTLIGHT EFFECT (Dim others on hover) */
+.spotlight-grid:hover .project-item {
+    opacity: 0.4; /* Dim everything */
+    filter: grayscale(100%) blur(2px);
+    transform: scale(0.98);
+}
+
+.spotlight-grid .project-item:hover {
+    opacity: 1; /* Restore hovered item */
+    filter: grayscale(0%) blur(0px);
+    transform: scale(1.02);
+    z-index: 10;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    border-color: rgba(255,255,255,0.4);
+}
+
+/* 3. Creative Card Styling */
+.project-item {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #000;
+    border: 1px solid var(--glass-border);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Ultra smooth */
+}
+
+.project-item .thumbnail-wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+.project-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.8s;
+}
+
+/* 4. Overlay Typography */
+.project-overlay {
+    position: absolute;
+    bottom: 0; left: 0; width: 100%;
+    padding: 40px;
+    background: linear-gradient(to top, black 20%, transparent 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    opacity: 1; /* Always visible but subtle */
+}
+
+.overlay-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transform: translateY(10px);
+    transition: 0.4s;
+}
+
+.project-item:hover .overlay-content {
+    transform: translateY(0);
+}
+
+.project-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+
+.project-role {
+    font-size: 0.8rem;
+    color: var(--accent-glow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+/* "01" Index Number */
+.project-index {
+    position: absolute;
+    top: 20px; left: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    z-index: 5;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 5px 10px;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+}
+
+/* Play Button Trigger */
+.play-trigger {
+    background: #fff;
+    color: #000;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: 0.4s;
+}
+
+.project-item:hover .play-trigger {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* --- 5. REEL STRIP (Horizontal Scroll) --- */
+.reels-strip {
+    display: flex;
+    gap: 25px;
+    overflow-x: auto;
+    padding-bottom: 40px;
+    scroll-snap-type: x mandatory;
+}
+
+.reels-strip::-webkit-scrollbar { height: 6px; }
+.reels-strip::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+.reel-card {
+    min-width: 250px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+.reel-media {
+    width: 100%;
+    aspect-ratio: 9/16;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--glass-border);
+}
+
+.reel-media img {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.7;
+    transition: 0.4s;
+}
+
+.reel-icon {
+    position: absolute;
+    top: 15px; right: 15px;
+    background: rgba(0,0,0,0.6);
+    width: 35px; height: 35px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    backdrop-filter: blur(5px);
+    font-size: 1.2rem;
+}
+
+.reel-card:hover .reel-media img { opacity: 1; transform: scale(1.05); }
+.reel-card:hover { transform: translateY(-10px); }
+
+.reel-info {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-gray);
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.reel-card:hover .reel-info { color: #fff; }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .spotlight-grid { grid-template-columns: 1fr; }
+    .spotlight-grid .project-item.featured { grid-column: auto; height: 300px; }
+    .project-title { font-size: 1.5rem; }
+    .project-overlay { padding: 20px; }
+}
+
+
+/* --- CREATIVE OVERVIEW: VISUAL ALCHEMY --- */
+
+.overview-hero {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* 1. Status Badge (Pulsing) */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #4ade80; /* Green text */
+    align-self: flex-start;
+    text-transform: uppercase;
+}
+
+.pulsing-dot {
+    width: 8px; height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+/* 2. Mega Headline (Hollow Effect) */
+.mega-headline {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: clamp(4rem, 10vw, 8rem); /* Responsive Giant Text */
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -0.05em;
+    cursor: default;
+}
+
+/* The Outline Text */
+.outline-text {
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.3); /* Hollow stroke */
+    transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mega-headline:hover .outline-text {
+    color: white; /* Fills in on hover */
+    -webkit-text-stroke: 0px transparent;
+    text-shadow: 0 0 30px rgba(255,255,255,0.4);
+}
+
+/* The Filled Text */
+.filled-text {
+    color: white;
+    background: linear-gradient(to right, #fff, #888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 3. Manifesto Grid */
+.manifesto-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 60px;
+    margin-top: 20px;
+    align-items: start;
+}
+
+.manifesto-text p {
+    font-size: 1.25rem;
+    font-weight: 300;
+    line-height: 1.6;
+    color: #ccc;
+    border-left: 2px solid var(--glass-border);
+    padding-left: 20px;
+}
+
+.manifesto-text strong {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(255,255,255,0.3);
+    text-underline-offset: 4px;
+}
+
+/* 4. Stats HUD */
+.stats-hud {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.stat-item {
+    background: var(--bg-matte);
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    background: #1a1a1a;
+    border-color: rgba(255,255,255,0.3);
+}
+
+.stat-num {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--text-gray);
+    letter-spacing: 1px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* 5. Footer & CTA */
+.hero-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 30px;
+}
+
+.cta-magnetic {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.cta-magnetic .arrow {
+    transition: 0.3s;
+}
+
+.cta-magnetic:hover { gap: 20px; color: #ccc; }
+.cta-magnetic:hover .arrow { transform: translateX(5px); }
+
+.signature {
+    font-family: 'Playfair Display', serif; /* Signature Font */
+    font-style: italic;
+    font-size: 1.5rem;
+    color: #444;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .mega-headline { font-size: 3.5rem; }
+    .manifesto-grid { grid-template-columns: 1fr; gap: 40px; }
+    .stats-hud { order: -1; } /* Stats move above text on mobile */
+    .hero-footer { flex-direction: column; gap: 20px; align-items: flex-start; }
+}
