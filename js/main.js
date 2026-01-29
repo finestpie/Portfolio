@@ -1,139 +1,51 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const lightbox = document.getElementById('video-lightbox');
-    const closeBtn = document.getElementById('close-btn');
-    const videoFrame = document.getElementById('video-frame');
-    const projectItems = document.querySelectorAll('.project-item');
-
-    // Open Lightbox
-    projectItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const videoSrc = item.getAttribute('data-video');
-            if (videoSrc) {
-                videoFrame.src = videoSrc;
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden'; // Stop background scrolling
-            }
-        });
-    });
-
-    // Close Lightbox Function
-    const closeLightbox = () => {
-        lightbox.classList.remove('active');
-        videoFrame.src = ''; // Stop video
-        document.body.style.overflow = 'auto'; // Restore scrolling
-    };
-
-    // Event Listeners for Closing
-    closeBtn.addEventListener('click', closeLightbox);
     
-    // Close if clicking outside the video
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) {
-            closeLightbox();
-        }
-    });
+    // 1. PAGE FADE IN (Liquid Entry)
+    setTimeout(() => { document.body.classList.add('loaded'); }, 50);
 
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-            closeLightbox();
-        }
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-    // --- LIGHTBOX LOGIC (Keep existing code here) ---
-    const lightbox = document.getElementById('video-lightbox');
-    const closeBtn = document.getElementById('close-btn');
-    const videoFrame = document.getElementById('video-frame');
-    const projectItems = document.querySelectorAll('.project-item');
+    // 2. MAGNETIC CURSOR LOGIC
+    const cursor = document.getElementById('cursor');
+    
+    if(cursor) {
+        // Move cursor with mouse
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
 
-    if(lightbox) {
-        projectItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const videoSrc = item.getAttribute('data-video');
-                if (videoSrc) {
-                    videoFrame.src = videoSrc;
-                    lightbox.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
+        // "Magnet" Targets - these trigger the snap/grow effect
+        const magnetTargets = document.querySelectorAll('a, button, .project-item, .service-card, .email-premium-card, .reel-card');
+        
+        magnetTargets.forEach(target => {
+            target.addEventListener('mouseenter', () => {
+                document.body.classList.add('hovering');
             });
-        });
-
-        const closeLightbox = () => {
-            lightbox.classList.remove('active');
-            videoFrame.src = '';
-            document.body.style.overflow = 'auto';
-        };
-
-        closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
-        });
-    }
-
-    // --- NEW: EMAIL COPY LOGIC ---
-    const emailBtn = document.getElementById('email-btn');
-    
-    if (emailBtn) {
-        emailBtn.addEventListener('click', () => {
-            const email = emailBtn.getAttribute('data-email');
-            const tooltip = emailBtn.querySelector('.tooltip');
-            
-            navigator.clipboard.writeText(email).then(() => {
-                // Change tooltip text temporarily
-                const originalText = tooltip.innerText;
-                tooltip.innerText = "Copied!";
-                emailBtn.classList.add('copied');
-
-                setTimeout(() => {
-                    tooltip.innerText = originalText;
-                    emailBtn.classList.remove('copied');
-                }, 2000);
+            target.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hovering');
             });
         });
     }
-});
 
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. PAGE FADE-IN (Entry) ---
-    // Slight delay to ensure elements are ready, then show body
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 50);
-
-    // --- 2. SMOOTH PAGE SWITCHING (Exit) ---
-    // Find all links on the page
-    const links = document.querySelectorAll('a');
-
-    links.forEach(link => {
+    // 3. SMOOTH PAGE TRANSITION INTERCEPTOR
+    document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', e => {
             const href = link.getAttribute('href');
             const target = link.getAttribute('target');
 
-            // Only run transition if it's an internal link (not #hashtags or external sites)
+            // Only intercept internal links
             if (href && !href.startsWith('#') && target !== '_blank' && !href.includes('mailto:')) {
-                e.preventDefault(); // Stop immediate jump
-
-                // 1. Fade OUT the current page
-                document.body.classList.remove('loaded');
-
-                // 2. Wait for fade out (500ms), then go to new page
-                setTimeout(() => {
-                    window.location.href = href;
-                }, 500); 
+                e.preventDefault();
+                document.body.classList.remove('loaded'); // Fade Out
+                setTimeout(() => { window.location.href = href; }, 500); // Wait 500ms then go
             }
         });
     });
 
-    // --- 3. LIGHTBOX LOGIC (Your existing video player code) ---
+    // 4. LIGHTBOX LOGIC
     const lightbox = document.getElementById('video-lightbox');
     const closeBtn = document.getElementById('close-btn');
     const videoFrame = document.getElementById('video-frame');
-    const projectItems = document.querySelectorAll('.project-item');
+    const projectItems = document.querySelectorAll('.project-item, .reel-card'); // Added reels to lightbox
 
     if (lightbox) {
         projectItems.forEach(item => {
@@ -142,28 +54,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (videoSrc) {
                     videoFrame.src = videoSrc;
                     lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Lock Scroll
                 }
             });
         });
 
         const closeLightbox = () => {
             lightbox.classList.remove('active');
-            // Small delay to clear source so audio stops completely
-            setTimeout(() => { videoFrame.src = ''; }, 300);
+            setTimeout(() => { videoFrame.src = ''; }, 300); // Stop Audio
+            document.body.style.overflow = 'auto'; // Unlock Scroll
         };
 
         if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
-        
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
-        });
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
     }
 
-    // --- 4. COPY TO CLIPBOARD LOGIC ---
+    // 5. EMAIL COPY LOGIC
     const emailBtn = document.getElementById('email-btn');
     if (emailBtn) {
         emailBtn.addEventListener('click', () => {
@@ -172,115 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
             
             navigator.clipboard.writeText(email).then(() => {
                 const originalText = tooltip.innerText;
-                tooltip.innerText = "Copied!";
-                setTimeout(() => { tooltip.innerText = originalText; }, 2000);
-            });
-        });
-    }
-});
-
-
-// --- 4. COPY TO CLIPBOARD LOGIC ---
-    const emailBtn = document.getElementById('email-btn');
-    if (emailBtn) {
-        emailBtn.addEventListener('click', () => {
-            const email = emailBtn.getAttribute('data-email');
-            
-            // Note: We are targeting the new .copy-pill class which has the "tooltip" class as well
-            const tooltip = emailBtn.querySelector('.tooltip'); 
-            
-            navigator.clipboard.writeText(email).then(() => {
-                const originalText = tooltip.innerText;
-                tooltip.innerText = "Copied!";
-                
-                // Optional: Change style slightly to indicate success
-                tooltip.style.background = "#4ade80"; // Green tint
+                tooltip.innerText = "COPIED!";
+                tooltip.style.background = "#fff";
                 tooltip.style.color = "#000";
-
+                
                 setTimeout(() => { 
                     tooltip.innerText = originalText; 
-                    tooltip.style.background = ""; // Reset style
-                    tooltip.style.color = "";
+                    tooltip.style.background = ""; 
+                    tooltip.style.color = ""; 
                 }, 2000);
             });
         });
-    }
-
-
-    document.addEventListener('DOMContentLoaded', () => {
-
-    // --- 1. SECURITY: ANTI-THEFT ---
-    document.addEventListener('contextmenu', event => event.preventDefault()); // Disable Right Click
-    document.onkeydown = function(e) {
-        if(e.keyCode == 123) { return false; } // Disable F12
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { return false; } // Ctrl+Shift+I
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { return false; } // Ctrl+Shift+C
-        if(e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { return false; } // Ctrl+Shift+J
-        if(e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { return false; } // Ctrl+U
-    };
-
-    // --- 2. CUSTOM CURSOR ---
-    const cursor = document.createElement('div');
-    cursor.id = 'cursor';
-    document.body.appendChild(cursor);
-
-    document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-    });
-
-    // Cursor Grow Effect on Hoverable items
-    const hoverables = document.querySelectorAll('a, .project-item, .service-card, .channel-tabs a');
-    hoverables.forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
-    });
-
-    // --- 3. TEXT DECRYPTION EFFECT (SCRAMBLE) ---
-    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    const scrambleElements = document.querySelectorAll('.scramble-text');
-
-    scrambleElements.forEach(element => {
-        let iterations = 0;
-        const originalText = element.dataset.value; // Must store text in data-value attribute
-        
-        const interval = setInterval(() => {
-            element.innerText = originalText.split("")
-                .map((letter, index) => {
-                    if(index < iterations) { return originalText[index]; }
-                    return letters[Math.floor(Math.random() * 26)];
-                })
-                .join("");
-            
-            if(iterations >= originalText.length) { clearInterval(interval); }
-            
-            iterations += 1/3; // Speed of decryption
-        }, 30);
-    });
-
-    // --- 4. LIGHTBOX LOGIC ---
-    const lightbox = document.getElementById('video-lightbox');
-    const closeBtn = document.getElementById('close-btn');
-    const videoFrame = document.getElementById('video-frame');
-    const projectItems = document.querySelectorAll('.project-item');
-
-    if (lightbox) {
-        projectItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const videoSrc = item.getAttribute('data-video');
-                if (videoSrc) {
-                    videoFrame.src = videoSrc;
-                    lightbox.classList.add('active');
-                }
-            });
-        });
-
-        const closeLightbox = () => {
-            lightbox.classList.remove('active');
-            setTimeout(() => { videoFrame.src = ''; }, 300);
-        };
-
-        if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
     }
 });
