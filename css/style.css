@@ -841,6 +841,7 @@ body.loaded {
 .filled-text {
     color: white;
     background: linear-gradient(to right, #fff, #888);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -951,3 +952,5 @@ body.loaded {
     .stats-hud { order: -1; } /* Stats move above text on mobile */
     .hero-footer { flex-direction: column; gap: 20px; align-items: flex-start; }
 }
+
+
