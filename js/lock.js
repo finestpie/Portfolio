@@ -1,7 +1,7 @@
 // --- MAINTENANCE MODE CONFIGURATION ---
 // SET THIS TO 'true' TO LOCK THE SITE
 // SET THIS TO 'false' TO UNLOCK THE SITE
-const maintenanceMode = true; 
+const maintenanceMode = false; 
 
 // THE LOGIC (DO NOT TOUCH)
 (function() {
@@ -20,3 +20,4 @@ const maintenanceMode = true;
     }
 
 })();
+
