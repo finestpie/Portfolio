@@ -1,7 +1,7 @@
 // --- MAINTENANCE MODE CONFIGURATION ---
 // SET THIS TO 'true' TO LOCK THE SITE
 // SET THIS TO 'false' TO UNLOCK THE SITE
-const maintenanceMode = false; 
+const maintenanceMode = true; 
 
 // THE LOGIC (DO NOT TOUCH)
 (function() {
@@ -18,4 +18,5 @@ const maintenanceMode = false;
     if (!maintenanceMode && page === "maintenance.html") {
         window.location.href = "index.html";
     }
+
 })();
