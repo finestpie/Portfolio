@@ -3,32 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor Portfolio | Home</title>
+    <title>Ritesh Bera | Editor</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="intro-overlay">
-        <div class="intro-content">
-            <h1 class="glitch" data-text="EDITOR_NAME">EDITOR_NAME</h1>
-            <p>VISUAL STORYTELLER</p>
+    <header>
+        <a href="index.html" class="logo">Ritesh Bera</a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Overview</a></li>
+                <li><a href="narrative.html">Narrative</a></li>
+                <li><a href="commercial.html">Commercial</a></li>
+                <li><a href="info.html">Info</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="work-grid">
+            <div class="project-item" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                <div class="thumbnail-wrapper">
+                    <img src="https://via.placeholder.com/800x450/cccccc/333333?text=PROJECT+1" alt="Project 1">
+                </div>
+                <div class="project-info">
+                    <span class="project-title">The Long Night</span>
+                    <span class="project-role">Feature Film</span>
+                </div>
+            </div>
+
+            <div class="project-item" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                <div class="thumbnail-wrapper">
+                    <img src="https://via.placeholder.com/800x450/d6d6d6/333333?text=PROJECT+2" alt="Project 2">
+                </div>
+                <div class="project-info">
+                    <span class="project-title">Adidas Originals</span>
+                    <span class="project-role">Commercial</span>
+                </div>
+            </div>
+
+            <div class="project-item" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                <div class="thumbnail-wrapper">
+                    <img src="https://via.placeholder.com/800x450/e0e0e0/333333?text=PROJECT+3" alt="Project 3">
+                </div>
+                <div class="project-info">
+                    <span class="project-title">Vogue x Gucci</span>
+                    <span class="project-role">Fashion</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="lightbox" id="video-lightbox">
+        <div class="close-btn" id="close-btn">✕</div>
+        <div class="video-container">
+            <iframe id="video-frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
         </div>
     </div>
-    <nav>
-        <div class="logo">PORTFOLIO.</div>
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="work.html">Work</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
-    <header class="hero">
-        <div class="hero-text">
-            <h1>Cutting Through The Noise</h1>
-            <p>Professional Video Editing & Post-Production</p>
-            <a href="work.html" class="btn">View Projects</a>
-        </div>
-    </header>
+
     <script src="js/main.js"></script>
 </body>
 </html>
