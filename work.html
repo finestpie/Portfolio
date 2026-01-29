@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Work | Bas1c.Visuals</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="channel-container">
+        <div class="channel-banner">
+            <img src="assets/banner.jpg" alt="Channel Banner">
+        </div>
+        <div class="channel-header">
+            <div class="channel-identity">
+                <div class="profile-avatar">
+                    <img src="assets/BAS1C_LOGO.png" alt="Bas1c.Visuals">
+                </div>
+                <div class="channel-text">
+                    <h1>Bas1c.Visuals</h1>
+                    <p>Visual Storyteller • Editor • Colorist</p>
+                </div>
+            </div>
+            <nav class="channel-tabs">
+                <a href="index.html">Overview</a>
+                <a href="work.html" class="active">My Work</a>
+                <a href="info.html">Info</a>
+            </nav>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="work-grid">
+            
+            <div class="project-item" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                <div class="thumbnail-wrapper">
+                    <img src="https://via.placeholder.com/800x450/111/fff?text=CINEMATIC+WORK" alt="Project">
+                </div>
+                <div class="project-info">
+                    <span class="project-title">The Long Night</span>
+                    <span class="project-role">Feature Film</span>
+                </div>
+            </div>
+
+            <div class="project-item" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                <div class="thumbnail-wrapper">
+                    <img src="https://via.placeholder.com/800x450/111/fff?text=COMMERCIAL" alt="Project">
+                </div>
+                <div class="project-info">
+                    <span class="project-title">Adidas Campaign</span>
+                    <span class="project-role">Commercial</span>
+                </div>
+            </div>
+
+             <div class="project-item reel-item" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1">
+                <div class="thumbnail-wrapper">
+                    <img src="https://via.placeholder.com/450x800/111/fff?text=REEL" alt="Reel">
+                </div>
+                <div class="project-info">
+                    <span class="project-title">Viral Edit</span>
+                    <span class="project-role">Social Media</span>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="lightbox" id="video-lightbox">
+        <div class="close-btn" id="close-btn">✕</div>
+        <div class="video-container">
+            <iframe id="video-frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
